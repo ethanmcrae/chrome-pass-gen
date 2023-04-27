@@ -12,9 +12,8 @@ const App: React.FC = () => {
   const handleCopy = () => {
     console.log('Here');
     setIsCopied(true);
-    const password = generatePassword(passwordLength, includeSpecialChars);
+    const password = copyRandomPassword(passwordLength, includeSpecialChars);
     savePassToHistory(password, setPasswordHistory);
-    copyToClipboard(password);
     setTimeout(() => {
       setIsCopied(false);
     }, 3000);
@@ -30,7 +29,7 @@ const App: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <VerificationBar isCopied={isCopied} />
       <Settings onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />
-      <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} />
+      <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={copyRandomPassword} passwordLength={passwordLength} includeSpecialChars={includeSpecialChars} />
     </div>
   );
 };
@@ -61,6 +60,12 @@ const copyToClipboard = (text: string): void => {
   el.select();
   document.execCommand("copy");
   document.body.removeChild(el);
+}
+
+const copyRandomPassword = (length: number, includeSpecialChars: boolean): string => {
+  const password = generatePassword(length, includeSpecialChars);
+  copyToClipboard(password);
+  return password;
 }
 
 const savePassToHistory = (password: string, setPasswordHistory: React.Dispatch<SetStateAction<HistoryData>>): void => {
