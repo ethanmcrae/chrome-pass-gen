@@ -10,10 +10,13 @@ const App: React.FC = () => {
   const [passwordHistory, setPasswordHistory] = useState<HistoryData>({});
 
   const handleCopy = () => {
-    console.log('Here');
-    setIsCopied(true);
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
+    displayCopyMessage();
     savePassToHistory(password, setPasswordHistory);
+  };
+
+  const displayCopyMessage = () => {
+    setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
     }, 3000);
@@ -26,10 +29,10 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 relative">
       <VerificationBar isCopied={isCopied} />
       <Settings onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />
-      <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={copyRandomPassword} passwordLength={passwordLength} includeSpecialChars={includeSpecialChars} />
+      <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} />
     </div>
   );
 };

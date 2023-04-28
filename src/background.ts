@@ -31,19 +31,6 @@ const deletePassword = (url: string) => {
   });
 };
 
-const updatePassword = (url: string, newPassword: string) => {
-  chrome.storage.sync.get('passwordHistory', (data) => {
-    let passwordHistory = data.passwordHistory || {};
-
-    if (passwordHistory[url]) {
-      passwordHistory[url].password = newPassword;
-      chrome.storage.sync.set({ passwordHistory }, () => {
-        console.log('Password entry updated.');
-      });
-    }
-  });
-};
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'savePassword') {
     savePassword(request.url, request.password);
@@ -54,9 +41,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
   } else if (request.type === 'deletePassword') {
     deletePassword(request.url);
-    sendResponse({ success: true });
-  } else if (request.type === 'updatePassword') {
-    updatePassword(request.url, request.newPassword);
     sendResponse({ success: true });
   }
 
