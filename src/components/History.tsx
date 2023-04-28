@@ -49,7 +49,7 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
           {Object.entries(passwordHistory)
             .sort((a, b) => b[1].time - a[1].time)
             .map(([url, passwordData], index) => (
-              <li key={index} className="flex justify-between items-center w-11/12 px-4 py-2 bg-customPurple-800 rounded-lg shadow mb-2 gap-4">
+              <li key={index} className="flex justify-between items-center w-11/12 px-4 py-2 bg-grayPurple rounded-lg shadow mb-2 gap-4 overflow-auto">
                 <span>{url}</span>
                 <span className="cursor-pointer monospaced py-1 px-2 bg-gray-600 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
                 <button

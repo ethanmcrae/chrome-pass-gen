@@ -17,7 +17,7 @@ const Settings: React.FC<SettingsProps> = ({ onCopy, includeSpecialChars, setInc
     <div className="flex mt-4 justify-around w-full">
       <div className="w-1/2 flex flex-col justify-center items-center p-3 cursor-pointer" onClick={onCopy}>
         <FontAwesomeIcon icon={faSync}
-        className="text-white rounded-full p-4 text-2xl"
+        className="text-white rounded-full text-4xl p-6 mt-4"
         style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}} />
         <button className="mt-2 text-gray-600 cursor-default">
           Generate Again
