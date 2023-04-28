@@ -14,7 +14,7 @@
   }
 
   body {
-    width: 300px;
+    min-width: 300px;
     height: 200px;
   }
 
@@ -31,7 +31,7 @@
     appearance: none;
     width: 16px;
     height: 16px;
-    background-color: #b8b8b8;
+    background-color: #eaeaea;
     border-radius: 50%;
     border: none;
   }
@@ -41,8 +41,11 @@
   }
 
   .toggle-checkbox:checked ~ .toggle-switch {
-    background-color: #48BB78; /* Green color */
+    background-color: #a372d0;
   }
+  .toggle-checkbox:not(:checked) ~ .toggle-switch {
+    background-color: #4c474e;
+    }
 
   .toggle-checkbox:checked ~ .toggle-dot {
     transform: translateX(100%);
