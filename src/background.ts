@@ -2,9 +2,10 @@
 
 const savePassword = (url: string, password: string) => {
   chrome.storage.sync.get('passwordHistory', (data) => {
-    let passwordHistory = data.passwordHistory || {};
+    const passwordHistory = data.passwordHistory || {};
+    const time = Date.now();
 
-    passwordHistory[url] = { password };
+    passwordHistory[url] = { password, time };
 
     chrome.storage.sync.set({ passwordHistory }, () => {
       console.log('Password history updated.');
@@ -20,7 +21,7 @@ const getPasswordHistory = (callback: (passwordHistory: { [url: string]: { passw
 
 const deletePassword = (url: string) => {
   chrome.storage.sync.get('passwordHistory', (data) => {
-    let passwordHistory = data.passwordHistory || {};
+    const passwordHistory = data.passwordHistory || {};
 
     if (passwordHistory[url]) {
       delete passwordHistory[url];

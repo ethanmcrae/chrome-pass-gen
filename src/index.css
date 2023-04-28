@@ -13,6 +13,11 @@
     background-color: #0f0f0f;
   }
 
+  body {
+    width: 300px;
+    height: 200px;
+  }
+
   .monospaced {
     font-family: 'Roboto Mono', monospace;
   }
