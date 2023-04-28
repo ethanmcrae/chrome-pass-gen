@@ -1,7 +1,7 @@
 import React, { useState, useEffect, SetStateAction } from 'react';
 import VerificationBar from './components/VerificationBar';
 import Settings from './components/Settings';
-import History, { HistoryData, PasswordData } from './components/History';
+import History, { HistoryData } from './components/History';
 
 const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -24,8 +24,16 @@ const App: React.FC = () => {
 
   // Copy the password to the clipboard when the popup is opened
   useEffect(() => {
-    // Copy a new password to the clipboard
-    handleCopy();
+    // Load the saved password history
+    chrome.runtime.sendMessage({ type: 'getPasswordHistory' }, (response) => {
+      // Update state with the saved password history
+      setPasswordHistory(response);
+      // Decide to automatically copy/save a new password if the current URL is not in the history
+      getCurrentTabUrl((url) => {
+        if (!url) return; // Exit early if no url
+        if (!response[url]) handleCopy();
+      });
+    });
   }, []);
 
   return (
@@ -75,7 +83,8 @@ const savePassToHistory = (password: string, setPasswordHistory: React.Dispatch<
   getCurrentTabUrl((url) => {
     if (!url) return; // Type error handling
     chrome.runtime.sendMessage({ type: 'savePassword', url, password });
-    setPasswordHistory((passwordHistory: HistoryData) => ({...passwordHistory, [url]: {password}}));
+    const time = Date.now();
+    setPasswordHistory((passwordHistory: HistoryData) => ({...passwordHistory, [url]: {password, time}}));
   });
 }
 

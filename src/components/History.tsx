@@ -16,16 +16,11 @@ export interface HistoryData {
 
 export interface PasswordData {
   password: string;
+  time: number;
 }
 
 const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, newPassword, copyToClipboard, displayCopy }) => {
   const [visibleHistory, setVisibleHistory] = useState<boolean>(false);
-
-  useEffect(() => {
-    chrome.runtime.sendMessage({ type: 'getPasswordHistory' }, (response) => {
-      setPasswordHistory(response);
-    });
-  }, []);
 
   const handleRemove = (url: string) => {
     chrome.runtime.sendMessage({ type: 'deletePassword', url }, (response) => {
@@ -51,23 +46,25 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
       <button className="text-blue-600" onClick={() => setVisibleHistory(!visibleHistory)}> {visibleHistory ? 'Hide' : 'Show'} History</button>
       {visibleHistory && (
         <ul className="w-full mt-4">
-          {Object.entries(passwordHistory).map(([url, passwordData], index) => (
-            <li key={index} className="flex justify-between px-4 py-2 bg-white rounded shadow mb-2 gap-4">
-              <span>{url}</span>
-              <span className="cursor-pointer monospaced py-1 px-2 bg-gray-500 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
-              <button
-                onClick={newPassword}
-                className="text-blue-600"
-              >
-                <FontAwesomeIcon icon={faRefresh} />
-              </button>
-              <button
-                onClick={() => handleRemove(url)}
-                className="text-red-600"
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </li>
+          {Object.entries(passwordHistory)
+            .sort((a, b) => b[1].time - a[1].time)
+            .map(([url, passwordData], index) => (
+              <li key={index} className="flex justify-between px-4 py-2 bg-white rounded shadow mb-2 gap-4">
+                <span>{url}</span>
+                <span className="cursor-pointer monospaced py-1 px-2 bg-gray-500 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
+                <button
+                  onClick={newPassword}
+                  className="text-blue-600"
+                >
+                  <FontAwesomeIcon icon={faRefresh} />
+                </button>
+                <button
+                  onClick={() => handleRemove(url)}
+                  className="text-red-600"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </li>
           ))}
         </ul>
       )}
