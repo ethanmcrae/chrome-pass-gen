@@ -1,6 +1,6 @@
 {
   "name": "chrome-pass-gen",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "A simple and modern random password generator.",
   "main": "popup.js",
   "scripts": {
