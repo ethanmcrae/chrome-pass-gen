@@ -1,13 +1,16 @@
 import React, { useState, useEffect, SetStateAction } from 'react';
 import VerificationBar from './components/VerificationBar';
-import Settings from './components/Settings';
+import Generate from './components/Generate';
 import History, { HistoryData } from './components/History';
+import Settings from './components/Settings';
+import PageNav from './components/PageNav';
 
 const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [passwordLength, setPasswordLength] = useState(12);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [passwordHistory, setPasswordHistory] = useState<HistoryData>({});
+  const [settingsPage, setSettingsPage] = useState(false);
 
   const handleCopy = () => {
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
@@ -38,9 +41,15 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-50 relative">
-      <VerificationBar isCopied={isCopied} />
-      <Settings onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />
-      <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} />
+      <PageNav settingsPage={settingsPage} setSettingsPage={setSettingsPage} />
+      { settingsPage ? (
+          <Settings />
+          ) : ( <>
+            <VerificationBar isCopied={isCopied} />
+            <Generate onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />
+            <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} />
+            
+          </> )}
     </div>
   );
 };
