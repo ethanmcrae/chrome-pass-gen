@@ -6,7 +6,7 @@
   "icons": {
     "48": "icon.png"
   },
-  "permissions": ["clipboardWrite", "tabs", "storage", "history"],
+  "permissions": ["clipboardWrite", "tabs", "storage"],
   "background": {
     "service_worker": "background.js"
   },
