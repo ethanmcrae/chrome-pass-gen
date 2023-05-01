@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import AppleToggle from './AppleToggle';
-
-interface GenerateProps {
-  onCopy: () => void;
-  includeSpecialChars: boolean;
-  setIncludeSpecialChars: (includeSpecialChars: boolean) => void;
-  passwordLength: number;
-  setPasswordLength: (passwordLength: number) => void;
-}
+import { GenerateProps } from '../types';
 
 const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setIncludeSpecialChars, passwordLength, setPasswordLength }) => {
 

@@ -1,10 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-
-interface VerificationBarProps {
-  isCopied: boolean;
-}
+import { VerificationBarProps } from '../types';
 
 const VerificationBar: React.FC<VerificationBarProps> = ({ isCopied }) => {
   return isCopied ? (

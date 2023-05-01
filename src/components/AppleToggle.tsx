@@ -1,12 +1,7 @@
 import React from "react";
+import { AppleToggleProps } from "../types";
 
-interface Props {
-  state: boolean;
-  setState: (state: boolean) => void;
-  label: string;
-}
-
-const AppleToggle: React.FC<Props> = ({ state, setState, label }) => {
+const AppleToggle: React.FC<AppleToggleProps> = ({ state, setState, label }) => {
   return (
     <label htmlFor="toggle" className="inline-flex items-center cursor-pointer">
       <span className="text-xs mr-3 text-customPurple-200">{label}</span>

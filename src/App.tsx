@@ -1,9 +1,10 @@
 import React, { useState, useEffect, SetStateAction } from 'react';
 import VerificationBar from './components/VerificationBar';
 import Generate from './components/Generate';
-import History, { HistoryData } from './components/History';
+import History from './components/History';
 import Settings from './components/Settings';
 import PageNav from './components/PageNav';
+import { HistoryData } from './types';
 
 const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -11,6 +12,7 @@ const App: React.FC = () => {
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [passwordHistory, setPasswordHistory] = useState<HistoryData>({});
   const [settingsPage, setSettingsPage] = useState(false);
+  const [settings, setSettings] = useState('');
 
   const handleCopy = () => {
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
@@ -37,13 +39,18 @@ const App: React.FC = () => {
         if (!response[url]) handleCopy();
       });
     });
+
+    // Load the saved settings
+    chrome.runtime.sendMessage({ type: 'getSettings' }, (response) => {
+      setSettings(response.settings);
+    });
   }, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-50 relative">
       <PageNav settingsPage={settingsPage} setSettingsPage={setSettingsPage} />
       { settingsPage ? (
-          <Settings />
+          <Settings settings={settings} setSettings={setSettings} />
           ) : ( <>
             <VerificationBar isCopied={isCopied} />
             <Generate onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />

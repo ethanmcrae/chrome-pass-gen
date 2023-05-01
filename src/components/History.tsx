@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faRefresh } from '@fortawesome/free-solid-svg-icons';
-
-interface HistoryProps {
-  passwordHistory: HistoryData;
-  setPasswordHistory: React.Dispatch<React.SetStateAction<HistoryData>>;
-  newPassword: () => void;
-  copyToClipboard: (text: string) => void;
-  displayCopy: () => void;
-}
-
-export interface HistoryData {
-  [key: string]: PasswordData; // url: { ... }
-}
-
-export interface PasswordData {
-  password: string;
-  time: number;
-}
+import { HistoryProps } from '../types';
 
 const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, newPassword, copyToClipboard, displayCopy }) => {
   const [visibleHistory, setVisibleHistory] = useState<boolean>(false);
