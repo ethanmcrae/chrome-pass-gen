@@ -12,7 +12,9 @@ const App: React.FC = () => {
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [passwordHistory, setPasswordHistory] = useState<HistoryData>({});
   const [settingsPage, setSettingsPage] = useState(false);
-  const [settings, setSettings] = useState('');
+  const [settings, setSettings] = useState({
+    symbols: '!@#$%^&*()',
+  });
 
   const handleCopy = () => {
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
@@ -41,8 +43,8 @@ const App: React.FC = () => {
     });
 
     // Load the saved settings
-    chrome.runtime.sendMessage({ type: 'getSettings' }, (response) => {
-      setSettings(response.settings);
+    chrome.runtime.sendMessage({ type: 'getSettings' }, (settings) => {
+      setSettings(settings);
     });
   }, []);
 

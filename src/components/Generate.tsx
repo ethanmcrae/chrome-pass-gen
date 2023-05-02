@@ -8,11 +8,12 @@ const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setInc
 
   return (
     <div className="flex mt-4 justify-around w-full">
-      <div className="w-1/2 flex flex-col justify-center items-center p-3 cursor-pointer" onClick={onCopy}>
+      <div className="w-1/2 flex flex-col justify-center items-center p-3" >
         <FontAwesomeIcon icon={faSync}
-        className="text-white rounded-full text-4xl p-6 mt-4"
-        style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}} />
-        <button className="mt-2 text-gray-600 cursor-default">
+        className="text-white rounded-full text-4xl p-6 mt-4 cursor-pointer"
+        style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}}
+        onClick={onCopy} />
+        <button className="mt-2 text-gray-600" onClick={onCopy}>
           Generate Again
         </button>
       </div>

@@ -50,7 +50,7 @@ const deletePassword = async (url: string) => { // DELETE
 /* Settings */
 const saveSettings = async (settings: { [key: string]: any }) => { // UPDATE
   await setToStorage(SETTINGS, settings);
-  console.log('Settings updated.');
+  console.log('Settings updated.', settings);
 };
 
 const getSettings = async (callback: (settings: { [key: string]: any }) => void) => { // GET

@@ -29,15 +29,17 @@ export interface PageNavProps {
 }
 
 export interface SettingsProps {
-  settings: string;
-  setSettings: (symbols: string) => void;
+  settings: SettingState;
+  setSettings: (settings: SettingState) => void;
 }
 
 export interface TextInputProps {
   type: string;
   label: string;
   value: string;
-  onUpdate: (value: SettingState) => void;
+  onUpdate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onReset?: (event: React.MouseEvent<SVGSVGElement>) => void;
+  showReset?: boolean;
 }
 
 export interface VerificationBarProps {
