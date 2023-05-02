@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import TextInput from './TextInput';
-import { SettingsProps } from '../types';
+import Dropdown from './Dropdown';
+import { translate } from '../helpers/translate';
+import { SettingsProps, Language, SettingState } from '../types';
 
 const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
-  const [symbols, setSymbols] = useState(settings ? settings.symbols : '');
+  const [symbols, setSymbols] = useState(settings ? settings.symbols : '!@#$%^&*()');
+  const [language, setLanguage] = useState(settings ? settings.language : Language.English);
 
   const updateSettings = () => {
-    const newSettings = { symbols }; // TODO: Add others
+    const newSettings: SettingState = { symbols, language };
     setSettings(newSettings);
     chrome.runtime.sendMessage({ type: 'saveSettings', settings: newSettings });
   };
@@ -19,6 +22,12 @@ const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
     setSymbols('!@#$%^&*()');
   };
 
+  const updateLanguage = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+  };
+
+  const languages = Object.values(Language);
+
   return (
     <div>
       {/* Title */}
@@ -26,6 +35,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
       {/* Options */}
       <div className="flex flex-col items-center mt-4">
         <TextInput type="text" label="Symbols" value={symbols} onUpdate={updateSymbols} onReset={resetSymbols} showReset />
+        <Dropdown options={languages} selected={language} onChange={updateLanguage} />
         <button className="mt-4 text-gray-600" onClick={updateSettings}>Save</button>
       </div>
     </div>

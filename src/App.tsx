@@ -4,7 +4,7 @@ import Generate from './components/Generate';
 import History from './components/History';
 import Settings from './components/Settings';
 import PageNav from './components/PageNav';
-import { HistoryData } from './types';
+import { HistoryData, Language } from './types';
 
 const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -14,6 +14,7 @@ const App: React.FC = () => {
   const [settingsPage, setSettingsPage] = useState(false);
   const [settings, setSettings] = useState({
     symbols: '!@#$%^&*()',
+    language: Language.English
   });
 
   const handleCopy = () => {

@@ -1,5 +1,6 @@
 import { HistoryData } from './History';
 import { SettingState } from './State';
+import { Language } from './Language';
 
 export interface AppleToggleProps {
   state: boolean;
@@ -44,4 +45,10 @@ export interface TextInputProps {
 
 export interface VerificationBarProps {
   isCopied: boolean;
+}
+
+export interface DropdownProps {
+  options: Language[];
+  selected: string;
+  onChange: (newLanguage: Language) => void;
 }
