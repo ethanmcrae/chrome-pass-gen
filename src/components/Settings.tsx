@@ -1,58 +1,57 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSync } from '@fortawesome/free-solid-svg-icons';
-import AppleToggle from './AppleToggle';
+import React, { useState } from 'react'
+import TextInput from './TextInput';
+import Dropdown from './Dropdown';
+import { translate } from '../helpers/translate';
+import { SettingsProps, Language, SettingState } from '../types';
 
-interface SettingsProps {
-  onCopy: () => void;
-  includeSpecialChars: boolean;
-  setIncludeSpecialChars: (includeSpecialChars: boolean) => void;
-  passwordLength: number;
-  setPasswordLength: (passwordLength: number) => void;
-}
+const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
+  const [symbols, setSymbols] = useState(settings ? settings.symbols : '!@#$%^&*()');
+  const [language, setLanguage] = useState(settings ? settings.language : Language.English);
 
-const Settings: React.FC<SettingsProps> = ({ onCopy, includeSpecialChars, setIncludeSpecialChars, passwordLength, setPasswordLength }) => {
+  const updateSettings = () => {
+    const newSettings: SettingState = { symbols, language };
+    setSettings(newSettings);
+    chrome.runtime.sendMessage({ type: 'saveSettings', settings: newSettings });
+  };
+
+  const updateSymbols = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSymbols(e.target.value);
+  };
+
+  const resetSymbols = (e: React.MouseEvent<SVGSVGElement>) => {
+    setSymbols('!@#$%^&*()');
+  };
+
+  const updateLanguage = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+  };
+
+  // Array of possible language options
+  const languages = Object.values(Language);
+  // Translated prompts
+  const settingsPrompt = translate(language, "settings");
+  const symbolsPrompt = translate(language, "symbols");
+  const savePrompt = translate(language, "save");
 
   return (
-    <div className="flex mt-4 justify-around w-full">
-      <div className="w-1/2 flex flex-col justify-center items-center p-3 cursor-pointer" onClick={onCopy}>
-        <FontAwesomeIcon icon={faSync}
-        className="text-white rounded-full text-4xl p-6 mt-4"
-        style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}} />
-        <button className="mt-2 text-gray-600 cursor-default">
-          Generate Again
+    <div className="mt-2 mb-4">
+      {/* Title */}
+      <h2 className="text-2xl font-semibold text-center">{settingsPrompt}</h2>
+      {/* Options */}
+      <div className="flex flex-col items-center mt-4">
+        {/* Symbols */}
+        <TextInput type="text" label={symbolsPrompt} value={symbols} onUpdate={updateSymbols} onReset={resetSymbols} showReset />
+        {/* Language */}
+        <Dropdown options={languages} selected={language} onChange={updateLanguage} />
+        {/* Save Button */}
+        <button className="text-white rounded-md text-xl py-1 px-2 mt-8 cursor-pointer w-full"
+        style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}}
+        onClick={updateSettings}>
+          {savePrompt}
         </button>
-      </div>
-      <div className="w-1/2 flex flex-col items-center p-3">
-        <div className="w-full mb-2">
-          <label htmlFor="passwordLength" className="block text-xs text-customPurple-200 ml-2">
-            Length: {passwordLength}
-          </label>
-          <div className="flex items-center bg-gray-800 py-3 px-2 rounded-md">
-            <span className="text-customPurple-100 text-xs">8</span>
-            <input
-              id="passwordLength"
-              type="range"
-              min="8"
-              max="32"
-              value={passwordLength}
-              onChange={(e) => setPasswordLength(Number(e.target.value))}
-              className="w-full cursor-pointer mx-2 h-[2px] appearance-none focus:outline-none transition duration-150 ease-in-out thumb:white"
-              style={{
-                background: `linear-gradient(90deg, #a372d0 ${
-                  (passwordLength - 8) * 100 / 24
-                }%, #6b6570 ${(passwordLength - 8) * 100 / 24}%)`,
-              }}
-            />
-            <span className="text-customPurple-100 text-xs">32</span>
-          </div>
-        </div>
-        <div className="w-full bg-gray-800 py-3 px-2 rounded-md">
-          <AppleToggle state={includeSpecialChars} setState={setIncludeSpecialChars} label="Symbols" />
-        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Settings;

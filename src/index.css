@@ -18,10 +18,13 @@
     height: 200px;
   }
 
+  
+  
+  /* History List */
   .monospaced {
     font-family: 'Roboto Mono', monospace;
   }
-
+  
   input[type=range] {
     -webkit-appearance: none;
   }
@@ -54,6 +57,16 @@
   .toggle-dot {
     transform: translateX(0);
     transition: all 0.3s ease-in-out;
+  }
+
+  /* Settings page */
+  .mui-input::placeholder {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .mui-input:focus::placeholder {
+    opacity: 1;
   }
 }
 

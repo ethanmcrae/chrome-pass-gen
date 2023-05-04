@@ -1,13 +1,21 @@
 import React, { useState, useEffect, SetStateAction } from 'react';
 import VerificationBar from './components/VerificationBar';
+import Generate from './components/Generate';
+import History from './components/History';
 import Settings from './components/Settings';
-import History, { HistoryData } from './components/History';
+import PageNav from './components/PageNav';
+import { HistoryData, Language } from './types';
 
 const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
   const [passwordLength, setPasswordLength] = useState(12);
   const [includeSpecialChars, setIncludeSpecialChars] = useState(true);
   const [passwordHistory, setPasswordHistory] = useState<HistoryData>({});
+  const [settingsPage, setSettingsPage] = useState(false);
+  const [settings, setSettings] = useState({
+    symbols: '!@#$%^&*()',
+    language: Language.English
+  });
 
   const handleCopy = () => {
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
@@ -34,13 +42,24 @@ const App: React.FC = () => {
         if (!response[url]) handleCopy();
       });
     });
+
+    // Load the saved settings
+    chrome.runtime.sendMessage({ type: 'getSettings' }, (settings) => {
+      setSettings(settings);
+    });
   }, []);
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-50 relative">
-      <VerificationBar isCopied={isCopied} />
-      <Settings onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />
-      <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} />
+      <PageNav settingsPage={settingsPage} setSettingsPage={setSettingsPage} />
+      { settingsPage ? (
+          <Settings settings={settings} setSettings={setSettings} />
+          ) : ( <>
+            <VerificationBar isCopied={isCopied} settings={settings} />
+            <Generate onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} settings={settings} />
+            <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} settings={settings} />
+            
+          </> )}
     </div>
   );
 };

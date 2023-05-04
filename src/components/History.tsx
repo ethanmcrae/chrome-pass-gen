@@ -1,25 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { translate } from '../helpers/translate';
+import { HistoryProps } from '../types';
 
-interface HistoryProps {
-  passwordHistory: HistoryData;
-  setPasswordHistory: React.Dispatch<React.SetStateAction<HistoryData>>;
-  newPassword: () => void;
-  copyToClipboard: (text: string) => void;
-  displayCopy: () => void;
-}
-
-export interface HistoryData {
-  [key: string]: PasswordData; // url: { ... }
-}
-
-export interface PasswordData {
-  password: string;
-  time: number;
-}
-
-const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, newPassword, copyToClipboard, displayCopy }) => {
+const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, newPassword, copyToClipboard, displayCopy, settings }) => {
   const [visibleHistory, setVisibleHistory] = useState<boolean>(false);
 
   const handleRemove = (url: string) => {
@@ -41,17 +26,26 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
     displayCopy();
   }
 
+  // Translated prompts
+  const historyPrompt = translate(settings.language, "history")
+  const showPrompt = translate(settings.language, "show")
+  const hidePrompt = translate(settings.language, "hide")
+
   return (
     <div className="flex flex-col items-center mt-4">
-      <button className="text-customPurple-100" onClick={() => setVisibleHistory(!visibleHistory)}> {visibleHistory ? 'Hide' : 'Show'} History</button>
+      <button className="text-customPurple-100" onClick={() => setVisibleHistory(!visibleHistory)}>
+        {(visibleHistory ? hidePrompt : showPrompt) + ' ' + historyPrompt}
+      </button>
       {visibleHistory && (
-        <ul className="w-full mt-4 flex flex-col items-center">
+        <ul className="w-full max-h-64 overflow-y-scroll mt-4 flex flex-col items-center">
           {Object.entries(passwordHistory)
             .sort((a, b) => b[1].time - a[1].time)
             .map(([url, passwordData], index) => (
-              <li key={index} className="flex justify-between items-center w-11/12 px-4 py-2 bg-grayPurple rounded-lg shadow mb-2 gap-4 overflow-auto">
-                <span>{url}</span>
-                <span className="cursor-pointer monospaced py-1 px-2 bg-gray-600 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
+              <li key={index} className="flex justify-between items-center w-11/12 px-4 py-2 bg-grayPurple rounded-lg shadow mb-2 gap-4" style={{height: '2rem'}}>
+                <span className="w-[40%] overflow-x-auto">{url}</span>
+                <div className="w-[40%] overflow-x-auto overflow-y-hidden">
+                  <span className="cursor-pointer monospaced py-1 px-2 bg-gray-600 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
+                </div>
                 <button
                   onClick={newPassword}
                   className="text-customPurple-400"
