@@ -45,11 +45,11 @@ const Dropdown: React.FC<DropdownProps> = ({ options, selected, onChange }) => {
         </svg>
       </button>
       {isOpen && (
-        <ul className="absolute left-0 mt-1 w-full py-1 bg-white shadow-lg rounded-md">
+        <ul className="absolute max-h-56 overflow-y-scroll left-0 mt-1 w-full py-1 bg-grayPurple shadow-lg rounded-md">
           {options.map((option) => (
             <li
               key={option}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              className="px-4 py-2 hover:bg-whitePurple cursor-pointer hover:text-gray-600 transition-colors duration-200 ease-in-out"
               onClick={() => {
                 onChange(option);
                 setIsOpen(false);

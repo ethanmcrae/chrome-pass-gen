@@ -34,9 +34,9 @@ const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
   const savePrompt = translate(language, "save");
 
   return (
-    <div>
+    <div className="mt-2 mb-4">
       {/* Title */}
-      <h2 className="text-2xl font-semibold mt-2">{settingsPrompt}</h2>
+      <h2 className="text-2xl font-semibold text-center">{settingsPrompt}</h2>
       {/* Options */}
       <div className="flex flex-col items-center mt-4">
         {/* Symbols */}
@@ -44,7 +44,11 @@ const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
         {/* Language */}
         <Dropdown options={languages} selected={language} onChange={updateLanguage} />
         {/* Save Button */}
-        <button className="mt-4 text-gray-600" onClick={updateSettings}>{savePrompt}</button>
+        <button className="text-white rounded-md text-xl py-1 px-2 mt-8 cursor-pointer w-full"
+        style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}}
+        onClick={updateSettings}>
+          {savePrompt}
+        </button>
       </div>
     </div>
   );

@@ -27,7 +27,8 @@ module.exports = {
           500: "#8757b4",
           800: "#2f2542",
         },
-        grayPurple: "#2e2938"
+        grayPurple: "#2e2938",
+        whitePurple: "#bcb5c9",
       },
       textColor: {
         gray: {

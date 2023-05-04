@@ -12,7 +12,7 @@ const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setInc
   const symbolsPrompt = translate(settings.language, "symbols");
 
   return (
-    <div className="flex mt-4 justify-around w-full">
+    <div className="flex mt-4 justify-center w-full">
       <div className="w-1/2 flex flex-col justify-center items-center p-3" >
         <FontAwesomeIcon icon={faSync}
         className="text-white rounded-full text-4xl p-6 mt-4 cursor-pointer"
@@ -22,7 +22,7 @@ const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setInc
           {generatePrompt}
         </button>
       </div>
-      <div className="w-1/2 flex flex-col items-center p-3">
+      <div className="w-1/2 flex flex-col items-center p-3 max-w-[10rem]">
         <div className="w-full mb-2">
           <label htmlFor="passwordLength" className="block text-xs text-customPurple-200 ml-2">
             {`${lengthPrompt}: ${passwordLength}`}
