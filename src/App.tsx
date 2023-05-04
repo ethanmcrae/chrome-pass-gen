@@ -55,9 +55,9 @@ const App: React.FC = () => {
       { settingsPage ? (
           <Settings settings={settings} setSettings={setSettings} />
           ) : ( <>
-            <VerificationBar isCopied={isCopied} />
-            <Generate onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} />
-            <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} />
+            <VerificationBar isCopied={isCopied} settings={settings} />
+            <Generate onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} settings={settings} />
+            <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} settings={settings} />
             
           </> )}
     </div>

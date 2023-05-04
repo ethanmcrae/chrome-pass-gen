@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSync } from '@fortawesome/free-solid-svg-icons';
 import AppleToggle from './AppleToggle';
+import { translate } from '../helpers/translate';
 import { GenerateProps } from '../types';
 
-const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setIncludeSpecialChars, passwordLength, setPasswordLength }) => {
+const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setIncludeSpecialChars, passwordLength, setPasswordLength, settings }) => {
+
+  const generatePrompt = translate(settings.language, "generateAgain");
+  const lengthPrompt = translate(settings.language, "length");
+  const symbolsPrompt = translate(settings.language, "symbols");
 
   return (
     <div className="flex mt-4 justify-around w-full">
@@ -14,13 +19,13 @@ const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setInc
         style={{ background: "linear-gradient(315deg, rgba(127,87,180,1) 0%, rgba(135,87,180,1) 50%, rgba(142,87,180,1) 100%)"}}
         onClick={onCopy} />
         <button className="mt-2 text-gray-600" onClick={onCopy}>
-          Generate Again
+          {generatePrompt}
         </button>
       </div>
       <div className="w-1/2 flex flex-col items-center p-3">
         <div className="w-full mb-2">
           <label htmlFor="passwordLength" className="block text-xs text-customPurple-200 ml-2">
-            Length: {passwordLength}
+            {`${lengthPrompt}: ${passwordLength}`}
           </label>
           <div className="flex items-center bg-gray-800 py-3 px-2 rounded-md">
             <span className="text-customPurple-100 text-xs">8</span>
@@ -42,7 +47,7 @@ const Generate: React.FC<GenerateProps> = ({ onCopy, includeSpecialChars, setInc
           </div>
         </div>
         <div className="w-full bg-gray-800 py-3 px-2 rounded-md">
-          <AppleToggle state={includeSpecialChars} setState={setIncludeSpecialChars} label="Symbols" />
+          <AppleToggle state={includeSpecialChars} setState={setIncludeSpecialChars} label={symbolsPrompt} settings={settings} />
         </div>
       </div>
     </div>

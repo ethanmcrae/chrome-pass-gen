@@ -19,5 +19,8 @@ export type Translations = {
     symbols: string;
     history: string;
     save: string;
+    settings: string;
+    show: string;
+    hide: string;
   };
 }

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import { translate } from '../helpers/translate';
 import { HistoryProps } from '../types';
 
-const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, newPassword, copyToClipboard, displayCopy }) => {
+const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, newPassword, copyToClipboard, displayCopy, settings }) => {
   const [visibleHistory, setVisibleHistory] = useState<boolean>(false);
 
   const handleRemove = (url: string) => {
@@ -25,9 +26,15 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
     displayCopy();
   }
 
+  const historyPrompt = translate(settings.language, "history")
+  const showPrompt = translate(settings.language, "show")
+  const hidePrompt = translate(settings.language, "hide")
+
   return (
     <div className="flex flex-col items-center mt-4">
-      <button className="text-customPurple-100" onClick={() => setVisibleHistory(!visibleHistory)}> {visibleHistory ? 'Hide' : 'Show'} History</button>
+      <button className="text-customPurple-100" onClick={() => setVisibleHistory(!visibleHistory)}>
+        {(visibleHistory ? hidePrompt : showPrompt) + ' ' + historyPrompt}
+      </button>
       {visibleHistory && (
         <ul className="w-full mt-4 flex flex-col items-center">
           {Object.entries(passwordHistory)

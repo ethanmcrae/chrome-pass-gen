@@ -26,17 +26,25 @@ const Settings: React.FC<SettingsProps> = ({ settings, setSettings }) => {
     setLanguage(newLanguage);
   };
 
+  // Array of possible language options
   const languages = Object.values(Language);
+  // Translated prompts
+  const settingsPrompt = translate(language, "settings");
+  const symbolsPrompt = translate(language, "symbols");
+  const savePrompt = translate(language, "save");
 
   return (
     <div>
       {/* Title */}
-      <h2 className="text-2xl font-semibold mt-2">Settings</h2>
+      <h2 className="text-2xl font-semibold mt-2">{settingsPrompt}</h2>
       {/* Options */}
       <div className="flex flex-col items-center mt-4">
-        <TextInput type="text" label="Symbols" value={symbols} onUpdate={updateSymbols} onReset={resetSymbols} showReset />
+        {/* Symbols */}
+        <TextInput type="text" label={symbolsPrompt} value={symbols} onUpdate={updateSymbols} onReset={resetSymbols} showReset />
+        {/* Language */}
         <Dropdown options={languages} selected={language} onChange={updateLanguage} />
-        <button className="mt-4 text-gray-600" onClick={updateSettings}>Save</button>
+        {/* Save Button */}
+        <button className="mt-4 text-gray-600" onClick={updateSettings}>{savePrompt}</button>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ export interface AppleToggleProps {
   state: boolean;
   setState: (state: boolean) => void;
   label: string;
+  settings: SettingState;
 }
 
 export interface GenerateProps {
@@ -14,6 +15,7 @@ export interface GenerateProps {
   setIncludeSpecialChars: (includeSpecialChars: boolean) => void;
   passwordLength: number;
   setPasswordLength: (passwordLength: number) => void;
+  settings: SettingState;
 }
 
 export interface HistoryProps {
@@ -22,6 +24,7 @@ export interface HistoryProps {
   newPassword: () => void;
   copyToClipboard: (text: string) => void;
   displayCopy: () => void;
+  settings: SettingState;
 }
 
 export interface PageNavProps {
@@ -45,6 +48,7 @@ export interface TextInputProps {
 
 export interface VerificationBarProps {
   isCopied: boolean;
+  settings: SettingState;
 }
 
 export interface DropdownProps {
