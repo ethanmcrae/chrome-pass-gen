@@ -16,6 +16,7 @@ const App: React.FC = () => {
     symbols: '!@#$%^&*()',
     language: Language.English
   });
+  const [useEffectTrigger, setUseEffectTrigger] = useState(false);
 
   const handleCopy = () => {
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
@@ -31,9 +32,30 @@ const App: React.FC = () => {
     }, 3000);
   };
 
-  // Copy the password to the clipboard when the popup is opened
+  // 1️⃣ Load all the settings before taking actions
   useEffect(() => {
-    // Load the saved password history
+    // Load the saved settings
+    chrome.runtime.sendMessage({ type: 'getSettings' }, (settings) => {
+      setSettings(settings);
+    });
+    
+    // Load the saved generate settings
+    chrome.runtime.sendMessage({ type: 'getGenerateSettings' }, (settings) => {
+      setPasswordLength(() => {
+        setIncludeSpecialChars(() => {
+          setUseEffectTrigger(!useEffectTrigger); // Update chain is complete
+          return settings.includeSpecialChars
+        });
+        return settings.passwordLength
+      });
+    });
+  }, []);
+
+  // 2️⃣ After the settings are loaded:
+  // - render the password history
+  // - decide whether to copy a new password
+  useEffect(() => {
+    // 3️⃣ Load the saved password history
     chrome.runtime.sendMessage({ type: 'getPasswordHistory' }, (response) => {
       // Update state with the saved password history
       setPasswordHistory(response);
@@ -43,18 +65,7 @@ const App: React.FC = () => {
         if (!response[url]) handleCopy();
       });
     });
-
-    // Load the saved settings
-    chrome.runtime.sendMessage({ type: 'getSettings' }, (settings) => {
-      setSettings(settings);
-    });
-
-    // Load the saved generate settings
-    chrome.runtime.sendMessage({ type: 'getGenerateSettings' }, (settings) => {
-      setPasswordLength(settings.passwordLength);
-      setIncludeSpecialChars(settings.includeSpecialChars);
-    });
-  }, []);
+  }, [useEffectTrigger]);
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-gray-900 text-gray-50 relative">
@@ -65,7 +76,6 @@ const App: React.FC = () => {
             <VerificationBar isCopied={isCopied} settings={settings} />
             <Generate onCopy={handleCopy} passwordLength={passwordLength} setPasswordLength={setPasswordLength} includeSpecialChars={includeSpecialChars} setIncludeSpecialChars={setIncludeSpecialChars} settings={settings} />
             <History passwordHistory={passwordHistory} setPasswordHistory={setPasswordHistory} newPassword={handleCopy} copyToClipboard={copyToClipboard} displayCopy={displayCopyMessage} settings={settings} />
-            
           </> )}
     </div>
   );
