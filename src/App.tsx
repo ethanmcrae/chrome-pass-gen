@@ -62,6 +62,10 @@ const App: React.FC = () => {
       // Decide to automatically copy/save a new password if the current URL is not in the history
       getCurrentTabUrl((url) => {
         if (!url) return; // Exit early if no url
+        // Test if this is an actual URL
+        const validUrl = /^[^.]+\.[^.]+$/;
+        if (!validUrl.test(url)) return;
+        // Proceed to copy
         if (!response[url]) handleCopy();
       });
     });

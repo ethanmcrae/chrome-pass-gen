@@ -42,7 +42,7 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
             .sort((a, b) => b[1].time - a[1].time)
             .map(([url, passwordData], index) => (
               <li key={index} className="flex justify-between items-center w-11/12 px-4 py-2 bg-grayPurple rounded-lg shadow mb-2 gap-4" style={{height: '2rem'}}>
-                <span className="w-[40%] overflow-x-auto">{url}</span>
+                <a href={"https://" + url} className="w-[40%] overflow-x-auto no-underline" target="_blank" rel="noopener noreferrer">{url}</a>
                 <div className="w-[40%] overflow-x-auto overflow-y-hidden">
                   <span className="cursor-pointer monospaced py-1 px-2 bg-gray-600 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
                 </div>
