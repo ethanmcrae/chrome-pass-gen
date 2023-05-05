@@ -27,6 +27,19 @@ export interface HistoryProps {
   settings: SettingState;
 }
 
+export interface HistoryItemProps {
+  index: number;
+  url: string;
+  passwordData: {
+    time: number;
+    password: string;
+  };
+  handleCopy: (event: React.MouseEvent<HTMLSpanElement>) => void;
+  newPassword: () => void;
+  handleRemove: (url: string) => void;
+  settings: SettingState;
+}
+
 export interface PageNavProps {
   settingsPage: boolean;
   setSettingsPage: (settingsPage: boolean) => void;
@@ -55,4 +68,8 @@ export interface DropdownProps {
   options: Language[];
   selected: string;
   onChange: (newLanguage: Language) => void;
+}
+
+export interface HoverTooltipProps {
+  label: string;
 }

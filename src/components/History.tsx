@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faRefresh } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import HistoryItem from './HistoryItem';
 import { translate } from '../helpers/translate';
 import { HistoryProps } from '../types';
 
@@ -32,7 +31,7 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
   const hidePrompt = translate(settings.language, "hide")
 
   return (
-    <div className="flex flex-col items-center mt-4">
+    <div className="flex flex-col items-center mt-4 relative">
       <button className="text-customPurple-100" onClick={() => setVisibleHistory(!visibleHistory)}>
         {(visibleHistory ? hidePrompt : showPrompt) + ' ' + historyPrompt}
       </button>
@@ -41,24 +40,16 @@ const History: React.FC<HistoryProps> = ({ passwordHistory, setPasswordHistory, 
           {Object.entries(passwordHistory)
             .sort((a, b) => b[1].time - a[1].time)
             .map(([url, passwordData], index) => (
-              <li key={index} className="flex justify-between items-center w-11/12 px-4 py-2 bg-grayPurple rounded-lg shadow mb-2 gap-4" style={{height: '2rem'}}>
-                <a href={"https://" + url} className="w-[40%] overflow-x-auto no-underline" target="_blank" rel="noopener noreferrer">{url}</a>
-                <div className="w-[40%] overflow-x-auto overflow-y-hidden">
-                  <span className="cursor-pointer monospaced py-1 px-2 bg-gray-600 bg-opacity-20" onClick={handleCopy}>{passwordData.password}</span>
-                </div>
-                <button
-                  onClick={newPassword}
-                  className="text-customPurple-400"
-                >
-                  <FontAwesomeIcon icon={faRefresh} />
-                </button>
-                <button
-                  onClick={() => handleRemove(url)}
-                  className="text-red-800"
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </li>
+              <HistoryItem
+                key={index}
+                index={index}
+                url={url}
+                passwordData={passwordData}
+                handleCopy={handleCopy}
+                newPassword={newPassword}
+                handleRemove={handleRemove}
+                settings={settings}
+              />
           ))}
         </ul>
       )}

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Translations, Language } from "../types";
 
 export const translations: Translations = {
@@ -11,6 +12,26 @@ export const translations: Translations = {
     settings: "Settings",
     show: "Show",
     hide: "Hide",
+    created: "Created",
+    Monday: "Monday",
+    Tuesday: "Tuesday",
+    Wednesday: "Wednesday",
+    Thursday: "Thursday",
+    Friday: "Friday",
+    Saturday: "Saturday",
+    Sunday: "Sunday",
+    January: "January",
+    February: "February",
+    March: "March",
+    April: "April",
+    May: "May",
+    June: "June",
+    July: "July",
+    August: "August",
+    September: "September",
+    October: "October",
+    November: "November",
+    December: "December",
   },
   汉语: {
     generateAgain: "再次生成",
@@ -22,6 +43,26 @@ export const translations: Translations = {
     settings: "设置",
     show: "显示",
     hide: "隐藏",
+    created: "创建于",
+    Monday: "星期一",
+    Tuesday: "星期二",
+    Wednesday: "星期三",
+    Thursday: "星期四",
+    Friday: "星期五",
+    Saturday: "星期六",
+    Sunday: "星期日",
+    January: "一月",
+    February: "二月",
+    March: "三月",
+    April: "四月",
+    May: "五月",
+    June: "六月",
+    July: "七月",
+    August: "八月",
+    September: "九月",
+    October: "十月",
+    November: "十一月",
+    December: "十二月",
   },
   Español: {
     generateAgain: "Generar de nuevo",
@@ -33,6 +74,26 @@ export const translations: Translations = {
     settings: "Configuración",
     show: "Mostrar",
     hide: "Ocultar",
+    created: "Creado",
+    Monday: "Lunes",
+    Tuesday: "Martes",
+    Wednesday: "Miércoles",
+    Thursday: "Jueves",
+    Friday: "Viernes",
+    Saturday: "Sábado",
+    Sunday: "Domingo",
+    January: "Enero",
+    February: "Febrero",
+    March: "Marzo",
+    April: "Abril",
+    May: "Mayo",
+    June: "Junio",
+    July: "Julio",
+    August: "Agosto",
+    September: "Septiembre",
+    October: "Octubre",
+    November: "Noviembre",
+    December: "Diciembre",
   },
   हिन्दी: {
     generateAgain: "फिर से उत्पन्न करें",
@@ -44,6 +105,26 @@ export const translations: Translations = {
     settings: "सेटिंग्स",
     show: "दिखाएं",
     hide: "छिपाएं",
+    created: "निर्मित",
+    Monday: "सोमवार",
+    Tuesday: "मंगलवार",
+    Wednesday: "बुधवार",
+    Thursday: "गुरुवार",
+    Friday: "शुक्रवार",
+    Saturday: "शनिवार",
+    Sunday: "रविवार",
+    January: "जनवरी",
+    February: "फ़रवरी",
+    March: "मार्च",
+    April: "अप्रैल",
+    May: "मई",
+    June: "जून",
+    July: "जुलाई",
+    August: "अगस्त",
+    September: "सितंबर",
+    October: "अक्टूबर",
+    November: "नवंबर",
+    December: "दिसंबर",
   },
   العربية: {
     generateAgain: "أعد التوليد",
@@ -55,6 +136,26 @@ export const translations: Translations = {
     settings: "الإعدادات",
     show: "إظهار",
     hide: "إخفاء",
+    created: "أُنشئت",
+    Monday: "الاثنين",
+    Tuesday: "الثلاثاء",
+    Wednesday: "الأربعاء",
+    Thursday: "الخميس",
+    Friday: "الجمعة",
+    Saturday: "السبت",
+    Sunday: "الأحد",
+    January: "يناير",
+    February: "فبراير",
+    March: "مارس",
+    April: "أبريل",
+    May: "مايو",
+    June: "يونيو",
+    July: "يوليو",
+    August: "أغسطس",
+    September: "سبتمبر",
+    October: "أكتوبر",
+    November: "نوفمبر",
+    December: "ديسمبر",
   },
   Português: {
     generateAgain: "Gerar novamente",
@@ -66,6 +167,26 @@ export const translations: Translations = {
     settings: "Configurações",
     show: "Mostrar",
     hide: "Esconder",
+    created: "Criado",
+    Monday: "Segunda-feira",
+    Tuesday: "Terça-feira",
+    Wednesday: "Quarta-feira",
+    Thursday: "Quinta-feira",
+    Friday: "Sexta-feira",
+    Saturday: "Sábado",
+    Sunday: "Domingo",
+    January: "Janeiro",
+    February: "Fevereiro",
+    March: "Março",
+    April: "Abril",
+    May: "Maio",
+    June: "Junho",
+    July: "Julho",
+    August: "Agosto",
+    September: "Setembro",
+    October: "Outubro",
+    November: "Novembro",
+    December: "Dezembro",
   },
   বাংলা: {
     generateAgain: "আবার উত্পন্ন করুন",
@@ -77,6 +198,26 @@ export const translations: Translations = {
     settings: "সেটিংস",
     show: "দেখান",
     hide: "আড়ান",
+    created: "তৈরি",
+    Monday: "সোমবার",
+    Tuesday: "মঙ্গলবার",
+    Wednesday: "বুধবার",
+    Thursday: "বৃহস্পতিবার",
+    Friday: "শুক্রবার",
+    Saturday: "শনিবার",
+    Sunday: "রবিবার",
+    January: "জানুয়ারি",
+    February: "ফেব্রুয়ারি",
+    March: "মার্চ",
+    April: "এপ্রিল",
+    May: "মে",
+    June: "জুন",
+    July: "জুলাই",
+    August: "আগস্ট",
+    September: "সেপ্টেম্বর",
+    October: "অক্টোবর",
+    November: "নভেম্বর",
+    December: "ডিসেম্বর",
   },
   Русский: {
     generateAgain: "Сгенерировать снова",
@@ -88,6 +229,26 @@ export const translations: Translations = {
     settings: "Настройки",
     show: "Показать",
     hide: "Скрыть",
+    created: "Создано",
+    Monday: "Понедельник",
+    Tuesday: "Вторник",
+    Wednesday: "Среда",
+    Thursday: "Четверг",
+    Friday: "Пятница",
+    Saturday: "Суббота",
+    Sunday: "Воскресенье",
+    January: "Январь",
+    February: "Февраль",
+    March: "Март",
+    April: "Апрель",
+    May: "Май",
+    June: "Июнь",
+    July: "Июль",
+    August: "Август",
+    September: "Сентябрь",
+    October: "Октябрь",
+    November: "Ноябрь",
+    December: "Декабрь",
   },
   日本語: {
     generateAgain: "再生成",
@@ -99,6 +260,26 @@ export const translations: Translations = {
     settings: "設定",
     show: "表示",
     hide: "非表示",
+    created: "作成",
+    Monday: "月曜日",
+    Tuesday: "火曜日",
+    Wednesday: "水曜日",
+    Thursday: "木曜日",
+    Friday: "金曜日",
+    Saturday: "土曜日",
+    Sunday: "日曜日",
+    January: "1月",
+    February: "2月",
+    March: "3月",
+    April: "4月",
+    May: "5月",
+    June: "6月",
+    July: "7月",
+    August: "8月",
+    September: "9月",
+    October: "10月",
+    November: "11月",
+    December: "12月",
   },
   "Bahasa Indonesia": {
     generateAgain: "Hasilkan lagi",
@@ -110,25 +291,50 @@ export const translations: Translations = {
     settings: "Pengaturan",
     show: "Tampilkan",
     hide: "Sembunyikan",
+    created: "Dibuat",
+    Monday: "Senin",
+    Tuesday: "Selasa",
+    Wednesday: "Rabu",
+    Thursday: "Kamis",
+    Friday: "Jumat",
+    Saturday: "Sabtu",
+    Sunday: "Minggu",
+    January: "Januari",
+    February: "Februari",
+    March: "Maret",
+    April: "April",
+    May: "Mei",
+    June: "Juni",
+    July: "Juli",
+    August: "Agustus",
+    September: "September",
+    October: "Oktober",
+    November: "November",
+    December: "Desember",
   },
 };
 
-export function translate(
+export const translate = (
   language: Language,
   key: keyof Translations["English"]
-): string {
+): string => {
   return translations[language]?.[key] || translations[Language.English][key];
-}
+};
 
-/*
-English: English
-Chinese (Mandarin): 汉语
-Spanish: Español
-Hindi: हिन्दी
-Arabic: العربية
-Portuguese: Português
-Bengali: বাংলা
-Russian: Русский
-Japanese: 日本語
-Indonesian: Bahasa Indonesia
-*/
+export const translateDate = (
+  language: Language,
+  timestamp: number
+): string => {
+  // Split formatted data
+  const formattedDate = format(timestamp, "PPPP");
+  const [dayOfTheWeek, monthAndDay, year] = formattedDate.split(", ");
+  const [month, dayOfMonth] = monthAndDay.split(' ');
+
+  // Translate
+  const translated =
+    translate(language, dayOfTheWeek as keyof Translations["English"]) + ', ' +
+    translate(language, month as keyof Translations["English"]) + ' ' + dayOfMonth + ', ' +
+    year;
+
+  return translated;
+};

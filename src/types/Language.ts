@@ -22,5 +22,25 @@ export type Translations = {
     settings: string;
     show: string;
     hide: string;
+    created: string;
+    Monday: string;
+    Tuesday: string;
+    Wednesday: string;
+    Thursday: string;
+    Friday: string;
+    Saturday: string;
+    Sunday: string;
+    January: string;
+    February: string;
+    March: string;
+    April: string;
+    May: string;
+    June: string;
+    July: string;
+    August: string;
+    September: string;
+    October: string;
+    November: string;
+    December: string;
   };
 }
