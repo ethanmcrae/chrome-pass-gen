@@ -1,9 +1,20 @@
 /// <reference types="chrome" />
+import { SettingState, GenerateSettingState } from "./types";
 
 // Prevent collision with other extensions
 const EXTENSION_NAME = 'Password Generator';
 const HISTORY = `${EXTENSION_NAME}:history`;
 const SETTINGS = `${EXTENSION_NAME}:settings`;
+const GENERATE = `${EXTENSION_NAME}:generate`;
+
+/*
+   _____ _                              
+  / ____| |                             
+ | |    | |__  _ __ ___  _ __ ___   ___ 
+ | |    | '_ \| '__/ _ \| '_ ` _ \ / _ \
+ | |____| | | | | | (_) | | | | | |  __/  storage
+  \_____|_| |_|_|  \___/|_| |_| |_|\___|  helpers
+*/
 
 /* Password History */
 const getFromStorage = (key: string): Promise<any> => { // Helper function to wrap chrome.storage.sync.get with a Promise
@@ -47,18 +58,33 @@ const deletePassword = async (url: string) => { // DELETE
   }
 };
 
-/* Settings */
-const saveSettings = async (settings: { [key: string]: any }) => { // UPDATE
+/* Settings (Symbols: string, Language) */
+const saveSettings = async (settings: SettingState) => { // UPDATE
   await setToStorage(SETTINGS, settings);
   console.log('Settings updated.', settings);
 };
 
-const getSettings = async (callback: (settings: { [key: string]: any }) => void) => { // GET
+const getSettings = async (callback: (settings: SettingState) => void) => { // GET
   const settings = (await getFromStorage(SETTINGS)) || {};
   callback(settings);
 };
 
-/* Event Listener Handler */
+/* Generate Settings (Symbols: bool, Length) */
+const saveGenerateSettings = async (settings: GenerateSettingState) => { // UPDATE
+  await setToStorage(GENERATE, settings);
+  console.log('Generate settings updated.', settings);
+};
+
+const getGenerateSettings = async (callback: (settings: GenerateSettingState) => void) => { // GET
+  const settings = (await getFromStorage(GENERATE)) || {};
+  callback(settings);
+};
+
+/*
+|    .  __  ___  ___ .  .  ___  __  
+|    | /__`  |  |__  |\ | |__  |__)  event
+|___ | .__/  |  |___ | \| |___ |  \  handlers
+*/
 const handleRequest = (request: any, sendResponse: (response: any) => void) => {
   switch (request.type) {
     case 'savePassword':
@@ -85,6 +111,17 @@ const handleRequest = (request: any, sendResponse: (response: any) => void) => {
 
     case 'saveSettings':
       saveSettings(request.settings);
+      sendResponse({ success: true });
+      break;
+
+    case 'getGenerateSettings':
+      getGenerateSettings((settings) => {
+        sendResponse(settings);
+      });
+      break;
+
+    case 'saveGenerateSettings':
+      saveGenerateSettings(request.settings);
       sendResponse({ success: true });
       break;
 

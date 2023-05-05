@@ -4,7 +4,7 @@ import Generate from './components/Generate';
 import History from './components/History';
 import Settings from './components/Settings';
 import PageNav from './components/PageNav';
-import { HistoryData, Language } from './types';
+import { HistoryData, Language, GenerateSettingState } from './types';
 
 const App: React.FC = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -21,6 +21,7 @@ const App: React.FC = () => {
     const password = copyRandomPassword(passwordLength, includeSpecialChars);
     displayCopyMessage();
     savePassToHistory(password, setPasswordHistory);
+    saveGenerateSettings(passwordLength, includeSpecialChars);
   };
 
   const displayCopyMessage = () => {
@@ -46,6 +47,12 @@ const App: React.FC = () => {
     // Load the saved settings
     chrome.runtime.sendMessage({ type: 'getSettings' }, (settings) => {
       setSettings(settings);
+    });
+
+    // Load the saved generate settings
+    chrome.runtime.sendMessage({ type: 'getGenerateSettings' }, (settings) => {
+      setPasswordLength(settings.passwordLength);
+      setIncludeSpecialChars(settings.includeSpecialChars);
     });
   }, []);
 
@@ -106,6 +113,11 @@ const savePassToHistory = (password: string, setPasswordHistory: React.Dispatch<
     setPasswordHistory((passwordHistory: HistoryData) => ({...passwordHistory, [url]: {password, time}}));
   });
 }
+
+const saveGenerateSettings = (passwordLength: number, includeSpecialChars: boolean): void => {
+  const settings: GenerateSettingState = { passwordLength, includeSpecialChars }
+  chrome.runtime.sendMessage({ type: 'saveGenerateSettings', settings });
+};
 
 const getCurrentTabUrl = (callback: (url: string | undefined) => void): void => {
   // Query for the active tab in the current window
